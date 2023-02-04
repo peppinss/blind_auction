@@ -6,7 +6,7 @@ from logo import logo
 
 def playagain():
     while True:
-        variabile1 = input("Vuoi giocare ancora? Y N")
+        variabile1 = input("Vuoi continuare con il prossimo oggetto? Y N").lower
         if variabile1 == "y" or variabile1 == "yes":
             return True
         elif variabile1 == "n" or variabile1 == "no":
@@ -21,15 +21,19 @@ def checkwinner(database):
     for x in database:
         check1 = database[x]
         if check1 > check2:
-            score1 = x
-    print(f"Congratulazioni {score1} ha vinto puntando {check1}")
+            highestvalue = check1
+            nameofthewinner = x
+    print(f"Congratulazioni {nameofthewinner} ha vinto puntando {highestvalue}$")
 
 
 def bid():
     while True:
         try:
-            bid1 = int(input("inserisci la tua puntata\n"))
-            return bid1
+            bid1 = int(input("inserisci la tua puntata $\n"))
+            if bid1 > 0:
+                return bid1
+            else:
+                print("Il valore inserito e' troppo basso")
         except:
             print("il valore inserito non sembra correto, riprova")
 
@@ -42,10 +46,14 @@ def name(database, firstrun):
             for x in database:
                 if name in x:
                     print("Il nome inserito e' gia' stato preso")
-                else:
+                elif len(name) > 2:
                     return name
-        else:
+                else:
+                    print("il nome scelto non rispetta i criteri minimi")
+        elif len(name) > 2:
             return name
+        else:
+            print("il nome scelto non rispetta i criteri minimi")
 
 
 
@@ -60,7 +68,7 @@ def main():
         bid1 = bid()
         database[name1] = bid1
         while True:
-            again = input("Ci sono altre persone che voglio puntare Y N").lower()
+            again = input("Ci sono altre persone che voglio puntare? Y N\n").lower()
             if again == "y":
                 break
             elif again == "n":
@@ -74,8 +82,9 @@ def main():
 
 
 if __name__ == "__main__":
-    costanzo = True
-    while costanzo:
+    print("Benvenuto")
+    tryagain = True
+    while tryagain:
         print(logo)
         main()
-        costanzo =playagain()
+        tryagain = playagain()
